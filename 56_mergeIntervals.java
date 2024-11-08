@@ -1,3 +1,5 @@
+import java.io.*;
+import java.util.*;
 class Solution {
     public int[][] merge(int[][] intervals) {
         Arrays.sort(intervals, Comparator.comparingInt(a -> a[0]));
