@@ -24,7 +24,7 @@ class Solution {
             res[list.indexOf(num)]=num;
         return res;
     }
-    helper(TreeNode root){
+    public void helper(TreeNode root){
         if(root==null){
             return;
         }
