@@ -1,30 +1,41 @@
 class Solution {
     public List<String> wordSubsets(String[] words1, String[] words2) {
-        ArrayList<String> res = new ArrayList<>();
-        int[] maxFreq = new int[26];
-        for (String word : words2) {
-            int[] freq = new int[26];
-            for (char c : word.toCharArray()) {
-                freq[c - 'a']++;
-                maxFreq[c - 'a'] = Math.max(maxFreq[c - 'a'], freq[c - 'a']);
+        int[] count = new int[26];
+        for(int i=0;i<words2.length;i++)
+        {
+            int[] temp = new int[26];
+            for(int j=0;j<words2[i].length;j++)
+            {
+                temp[words2[i].charAt(j)-'a']++;
+            }
+            for(int j=0;j<26;j++)
+            {
+                count[j] = Math.max(count[j],temp[j]);
             }
         }
-        for (String word : words1) {
-            int[] freq = new int[26];
-            for (char c : word.toCharArray()) {
-                freq[c - 'a']++;
+        List<String> res = new ArrayList<>();
+        for(int i=0;i<words1.length;i++)
+        {
+            int temp[]=new int[26];
+            for(int j=0;j<words1[i].length;j++)
+            {
+                temp[words1[i].charAt(j)-'a']++;
             }
-            boolean isUniversal = true;
-            for (int i = 0; i < 26; i++) {
-                if (freq[i] < maxFreq[i]) {
-                    isUniversal = false;
+            boolean flag = true;
+            for(int j=0;j<26;j++)
+            {
+                if(temp[j]<count[j])
+                {
+                    flag = false;
                     break;
                 }
             }
-            if (isUniversal) {
-                res.add(word);
+            if(flag)
+            {
+                res.add(words1[i]);
             }
         }
         return res;
+
     }
 }
