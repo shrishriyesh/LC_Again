@@ -21,3 +21,17 @@ class Solution {
         return strs[0].substring(0, c);
     }
 }
+// class Solution {
+//     public String longestCommonPrefix(String[] strs) {
+//         Arrays.sort(strs);
+//         String first = strs[0];
+//         for(int i=0;i<first.length();i++){
+//             for(int j=1;j<strs.length;j++){
+//                 if(strs[j].charAt(i)!=first.charAt(i)){
+//                     return first.substring(0,i);
+//                 }
+//             }
+//         }
+//         return first;
+//     }
+// }
