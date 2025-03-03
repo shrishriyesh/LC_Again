@@ -19,3 +19,28 @@ class Solution {
         }
     }
 }
+
+
+// class Solution {
+//     String keys[]={"","","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
+//     public List<String> letterCombinations(String digits) {
+//         int l=digits.length();
+//         ArrayList<String> res= new ArrayList<>();
+//         function(digits,0,l,"",res);
+//         return res;
+//     }
+//     public void function(String digits, int i, int l,String ans,ArrayList<String> res)
+//     {
+//         if(ans.length()==l)
+//         {
+//             if(ans.length()!=0)
+//             res.add(ans);
+//             return;
+//         }
+//         int num=digits.charAt(i)-'0';
+//         for(int j=0;j<keys[num].length();j++)
+//         {
+//             function(digits,i+1,l,ans+keys[num].charAt(j),res);
+//         }
+//         return;    }
+// }
