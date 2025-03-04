@@ -29,3 +29,40 @@ public class Solution {
         nums[j] = temp;
     }
 }
+
+
+
+// class Solution {
+//     public void nextPermutation(int[] nums) {
+//         int x=-1;
+//         for(int i=nums.length-2;i>=0;i++)
+//         {
+//             if(nums[i]<nums[i+1])
+//             {
+//                 x=i;
+//                 break;
+//             }
+//         }
+//         if(x==-1)
+//         {
+//             Arrays.sort(nums);
+//             return;
+//         }
+//         else
+//         {
+//             int y=-1;
+//             for(int i=nums.length-1;i>x;i--)
+//             {
+//                 if(nums[i]>nums[x])
+//                 {
+//                     y=i;
+//                     break;
+//                 }
+//             }
+//             int temp=nums[x];
+//             nums[x]=nums[y];
+//             nums[y]=temp;
+//             Arrays.sort(nums,x+1,nums.length);
+//         }
+//     }
+// }
