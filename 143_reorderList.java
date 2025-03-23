@@ -59,3 +59,53 @@ class Solution {
 
 
 }
+
+
+/// Another Attempt using stack
+/// 
+/// 
+/// 
+/**
+//  * Definition for singly-linked list.
+//  * public class ListNode {
+//  *     int val;
+//  *     ListNode next;
+//  *     ListNode() {}
+//  *     ListNode(int val) { this.val = val; }
+//  *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+//  * }
+//  */
+// class Solution {
+//     public void reorderList(ListNode head) {
+//         Stack<ListNode> stack = new Stack<>();
+//         ListNode current = head;
+//         int length = 0;
+//         while(current != null) {
+//             stack.push(current);
+//             current = current.next;
+//             length++;
+//         }
+//         ListNode temp=head;
+//         boolean flag = true;
+//         ListNode x=null;
+//         while(length>0)
+//         {
+//             if(flag)
+//             {
+//                 x=temp.next;
+//                 temp.next = stack.pop();
+//                 temp = temp.next;
+//                 temp.next = x;
+//                 flag = false;
+//             }
+//             else
+//             {
+//                 temp = temp.next;
+//                 flag = true;
+//             }
+//             length--;
+//         }
+//         temp.next = null;
+//         return;
+//     }
+// }
