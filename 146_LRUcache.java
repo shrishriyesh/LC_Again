@@ -1,85 +1,80 @@
-class LRUCache {
-
-    final int capacity;
-    final Map<Integer, ListNode> cache;
-    final ListNode head;
-    final ListNode tail;
-
-    static class ListNode {
-        int key, value;
-        ListNode prev, next;
-        ListNode(int key, int value) {
-            this.key = key;
-            this.value = value;
-        }
+class DLLNode {
+    int key;
+    int value;
+    DLLNode prev;
+    DLLNode next;
+    DLLNode(int key,int value)
+    {
+        this.key = key;
+        this.value = value;
     }
+}
 
+class LRUCache {
+    DLLNode head;
+    DLLNode tail;
+    int capacity;
+    int size;
+    HashMap<Integer,DLLNode> map;
     public LRUCache(int capacity) {
-        this.capacity = capacity;
-        this.cache = new HashMap<>();
-        // dummy head and tail nodes to avoid null checks
-        head = new ListNode(0, 0);
-        tail = new ListNode(0, 0);
+        head = new DLLNode(-1,-1);
+        tail = new DLLNode(-1,-1);
         head.next = tail;
-        tail.prev = head;        
+        tail.prev = head;
+        this.capacity = capacity;
+        this.size = 0;
+        map = new HashMap<Integer,DLLNode>();
     }
     
     public int get(int key) {
-        if (!cache.containsKey(key)) return -1;
-        
-        // move the accessed node to the head
-        ListNode node = cache.get(key);
-        moveToHead(node);
-        return node.value;        
+        if(map.containsKey(key))
+        {
+            DLLNode node = map.get(key);
+            moveToHead(node);
+            return node.value;
+        }
+        return -1;
     }
     
     public void put(int key, int value) {
-        if (cache.containsKey(key)) {
-            // update the value and move to head
-            ListNode node = cache.get(key);
+        if(map.containsKey(key))
+        {
+            DLLNode node = map.get(key);
             node.value = value;
             moveToHead(node);
-        } else {
-            // add a new node
-            ListNode newNode = new ListNode(key, value);
-            cache.put(key, newNode);
-            addNode(newNode);
-            
-            if (cache.size() > capacity) {
-                // remove the least recently used node
-                ListNode tailNode = removeTail();
-                cache.remove(tailNode.key);
+        }
+        else
+        {
+            DLLNode node = new DLLNode(key,value);
+            map.put(key,node);
+            addNode(node);
+            size++;
+            if(size>capacity)
+            {
+                delete(tail.prev);
+                size--;
             }
-        }        
+        }
     }
-
-    private void addNode(ListNode node) {
-        node.prev = head;
-        node.next = head.next;
-        
-        head.next.prev = node;
-        head.next = node;
+    public void delete(DLLNode node)
+    {
+        node.prev.next = node.next;
+        node.next.prev = node.prev;
+        map.remove(node.key);
     }
-    
-    private void removeNode(ListNode node) {
-        ListNode prev = node.prev;
-        ListNode next = node.next;
-        
-        prev.next = next;
-        next.prev = prev;
-    }
-    
-    private void moveToHead(ListNode node) {
-        removeNode(node);
+    public void moveToHead(DLLNode node)
+    {
+        node.prev.next = node.next;
+        node.next.prev = node.prev;
         addNode(node);
     }
-    
-    private ListNode removeTail() {
-        ListNode res = tail.prev;
-        removeNode(res);
-        return res;
+    public void addNode(DLLNode node)
+    {
+        node.next = head.next;
+        head.next.prev = node;
+        head.next = node;
+        node.prev = head;
     }
-
 }
 
 /**
