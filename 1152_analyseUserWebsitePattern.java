@@ -1,3 +1,5 @@
+import java.util.List;
+
 class Solution {
     class Visit{
         int time;
@@ -28,29 +30,36 @@ class Solution {
             HashSet<String> patterns
                     = new HashSet<>();
             if(n < 3) continue;
-            for(int i=0;i<n-2;i++){
-                String sites= visits.get(i).site + visits.get(i+1).site + visits.get(i+2).site;
-                patterns.add(sites);
-                patternCount.put(sites, patternCount.getOrDefault(sites, 0) + 1);
-                if(patternCount.get(sites) > maxCount){
-                    maxCount = patternCount.get(sites);
-                    result.clear();
-                    result.add(visits.get(i).site);
-                    result.add(visits.get(i+1).site);
-                    result.add(visits.get(i+2).site);
-                    maxPattern = sites;
-                }
-                else if(patternCount.get(sites) == maxCount){
-                    if(maxPattern.compareTo(sites) > 0){
-                        maxPattern = sites;
-                        result.clear();
-                        result.add(visits.get(i).site);
-                        result.add(visits.get(i+1).site);
-                        result.add(visits.get(i+2).site);
+            for(int i=0;i<n;i++)
+            {
+                for(int j=i+1;j<n;j++)
+                {
+                    for(int k=j+1;k<n;k++)
+                    {
+                        String patternofString = visits.get(i).site + " " + visits.get(j).site + " " + visits.get(k).site;
+                        if(patterns.contains(patternofString)) continue;
+                        patterns.add(patternofString);
+                        patternCount.put(patternofString, patternCount.getOrDefault(patternofString, 0) + 1);
+                        if(patternCount.get(patternofString) > maxCount)
+                        {
+                            maxCount = patternCount.get(patternofString);
+                            maxPattern = patternofString;
+                        }
+                        else if(patternCount.get(patternofString) == maxCount)
+                        {
+                            if(maxPattern.compareTo(patternofString) > 0)
+                            {
+                                maxPattern = patternofString;
+                            }
+                        }
                     }
                 }
-
             }
+        }
+        String[] maxPatternArray = maxPattern.split(" ");
+        for(String s : maxPatternArray)
+        {
+            result.add(s);
         }
         return result;
 
