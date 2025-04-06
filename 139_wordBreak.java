@@ -26,3 +26,32 @@ class Solution {
         return false;
     }
 }
+
+
+
+//Using memoization
+
+class Solution
+{
+    public boolean wordBreak(String s, List<String> wordDict) {
+        HashSet <String> words = new HashSet<>(wordDict);
+        boolean[] memo = new boolean[s.length() + 1];
+        memo[0] = true;
+        int maxLength = 0;
+        for (String word : wordDict) {
+            maxLength = Math.max(maxLength, word.length());
+        }
+        for(int i=1;i<memo.length;i++)
+        {
+            for(int j=i-1;j>=Math.max(0,i-maxLength);j--)
+            {
+                if(memo[j] && words.contains(s.substring(j,i)))
+                {
+                    memo[i]=true;
+                    break;
+                }
+            }
+        }
+        return memo[s.length()];
+    }
+}
