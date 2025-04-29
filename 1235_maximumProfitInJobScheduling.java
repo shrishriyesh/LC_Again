@@ -59,3 +59,40 @@ class Solution {
         return findMaxProfit(jobs);
     }
 }
+
+//DP method using a Binary search for upper bound and DP on end time.
+class Solution {
+    public int jobScheduling(int[] startTime, int[] endTime, int[] profit) {
+        int n=startTime.length;
+        int jobs[][]=new int[n][3];
+        for(int i=0;i<n;i++)
+        {
+            jobs[i][0]=startTime[i];
+            jobs[i][1]=endTime[i];
+            jobs[i][2]=profit[i];
+        }
+        Arrays.sort(jobs,(a,b)->(a[1]-b[1]));
+        int dp[]=new int[n+1];
+        for(int i=0;i<n;i++)
+        {
+            int lastJob=upperBound(jobs,i,jobs[i][0]);
+            dp[i+1]=Math.max(dp[i],dp[lastJob]+jobs[i][2]);
+        }
+        return dp[n];
+    }
+    public int upperBound(int jobs[][],int r,int target)
+    {
+        int l=0;
+        while(l<r)
+        {
+            int mid=(l+r)/2;
+            if(jobs[mid][1]<=target)
+            {
+                l=mid+1;
+            }
+            else
+            r=mid;
+        }
+        return l;
+    }
+}
