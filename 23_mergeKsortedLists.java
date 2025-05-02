@@ -34,3 +34,32 @@ class Solution {
      return head.next;   
     }
 }
+
+
+///same approach using min heap
+/// 
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode mergeKLists(ListNode[] lists) {
+        PriorityQueue<Pair<Integer,ListNode>> pq=new PriorityQueue<>((a,b)-> a.getValue().val-b.getValue().val);
+        ListNode headprev=new ListNode(-1);
+        ListNode head=headprev;
+        for(ListNode x:lists)
+        {
+            if(x!=null)
+                pq.add(new Pair<>(x.val,x));
+        }
+        
+        return head.next;
+    }
+}
