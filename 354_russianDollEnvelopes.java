@@ -27,6 +27,8 @@ class Solution {
                 }
            }
         });
+        //Arrays.sort(envelopes, (a, b) -> a[0] == b[0] ? b[1] - a[1] : a[0] - b[0]);
+        
         // extract the second dimension and run LIS
         int[] secondDim = new int[envelopes.length];
         for (int i = 0; i < envelopes.length; ++i) secondDim[i] = envelopes[i][1];
