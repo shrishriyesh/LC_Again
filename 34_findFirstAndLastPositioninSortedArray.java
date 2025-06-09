@@ -42,3 +42,56 @@ class Solution {
         }
     }
 }
+
+
+/// Aproach 2
+class Solution{
+    public int[] searchRange(int[] nums, int target) {
+        int[] ans=new int[2];
+        ans[0]=firstocc(nums,target);
+        if(ans[0]==-1){
+            ans[1]=-1;
+            return ans;
+        }
+        ans[1]=lastocc(nums,target,ans[0]);
+        return ans;
+    }
+    public int firstocc(int nums[],int target)
+    {
+        int l=0;
+        int r=nums.length-1;
+        int ans=-1;
+        while(l<=r)
+        {
+            int mid=l+(r-l)/2;
+            if(nums[mid]>=target)
+            {
+                if(nums[mid]==target)
+                    ans=mid;
+                r=mid-1;
+            }
+            else
+                l=mid+1;
+        }
+        return ans;
+    }
+    public int lastocc(int nums[],int target,int start)
+    {
+        int l=start;
+        int r=nums.length-1;
+        int ans=start;
+        while(l<=r)
+        {
+            int mid=l+(r-l)/2;
+            if(nums[mid]<=target)
+            {
+                if(nums[mid]==target)
+                    ans=mid;
+                l=mid+1;
+            }
+            else
+                r=mid-1;
+        }
+        return ans;
+    }
+}
