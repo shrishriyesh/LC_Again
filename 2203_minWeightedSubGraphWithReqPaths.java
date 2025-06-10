@@ -58,3 +58,59 @@ class Solution {
         }
     }
 }
+
+
+////IF -ve weights present
+/// Use Bellman Ford
+/// 
+class Solution {
+    ArrayList<int[]>[] nextGraph, preGraph;
+    
+    public long minimumWeight(int n, int[][] edges, int src1, int src2, int dest) {
+        long[] src1To = bellmanFord(n, edges, src1);
+        long[] src2To = bellmanFord(n, edges, src2);
+
+        // Reverse all edges for "toDest"
+        int[][] reversedEdges = new int[edges.length][3];
+        for (int i = 0; i < edges.length; i++) {
+            reversedEdges[i][0] = edges[i][1]; // to becomes from
+            reversedEdges[i][1] = edges[i][0]; // from becomes to
+            reversedEdges[i][2] = edges[i][2];
+        }
+
+        long[] toDest = bellmanFord(n, reversedEdges, dest);
+
+        long res = Long.MAX_VALUE;
+        for (int i = 0; i < n; i++) {
+            if (src1To[i] != Long.MAX_VALUE && src2To[i] != Long.MAX_VALUE && toDest[i] != Long.MAX_VALUE) {
+                res = Math.min(res, src1To[i] + src2To[i] + toDest[i]);
+            }
+        }
+
+        return res == Long.MAX_VALUE ? -1 : res;
+    }
+
+    private long[] bellmanFord(int n, int[][] edges, int src) {
+        long[] dist = new long[n];
+        Arrays.fill(dist, Long.MAX_VALUE);
+        dist[src] = 0;
+
+        for (int i = 0; i < n - 1; i++) {
+            for (int[] edge : edges) {
+                int u = edge[0], v = edge[1], w = edge[2];
+                if (dist[u] != Long.MAX_VALUE && dist[u] + w < dist[v]) {
+                    dist[v] = dist[u] + w;
+                }
+            }
+        }
+
+        // Optional: check for negative weight cycle if needed
+        // for (int[] edge : edges) {
+        //     if (dist[edge[0]] != Long.MAX_VALUE && dist[edge[0]] + edge[2] < dist[edge[1]]) {
+        //         throw new RuntimeException("Negative weight cycle detected");
+        //     }
+        // }
+
+        return dist;
+    }
+}
